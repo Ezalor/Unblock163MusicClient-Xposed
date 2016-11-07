@@ -40,6 +40,7 @@ deploy:
   on:
     repo: Ezalor/Unblock163MusicClient-Xposed
     tags: true
+    all_branches: true
 
 after_deploy:
     - fir p $APK_PATH -T $FIR_TOKEN
