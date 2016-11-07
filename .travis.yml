@@ -1,0 +1,43 @@
+language: android
+
+jdk:
+  - oraclejdk8
+
+before_install:
+  - gem install fir-cli
+
+android:
+  components:
+    - tools
+    - build-tools-25.0.0
+    - android-25
+
+script:
+- "./gradlew build"
+
+after_script:
+- cd app
+- git init
+- git config user.name "$username"
+- git config user.email "$useremail"
+- git add .
+- git commit -m "Build"
+- git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:Build-app
+
+branches:
+  only:
+    - master
+
+deploy:
+  provider: releases
+  api_key:
+    secure: $GITHUB_TRAVIS
+  file: app/build/outputs/apk/app-release-unsigned.apk
+  skip_cleanup: true
+  on:
+    repo: Ezalor/Unblock163MusicClient-Xposed
+    tags: true
+
+after_deploy:
+    - fir p app/build/outputs/apk/app-release-unsigned.apk -T $FIR_TOKEN
+
