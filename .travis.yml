@@ -1,20 +1,15 @@
 language: android
-
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 before_install:
-  - gem install fir-cli
-
+- gem install fir-cli
 android:
   components:
-    - tools
-    - build-tools-25.0.0
-    - android-25
-
+  - tools
+  - build-tools-25.0.0
+  - android-25
 script:
 - "./gradlew build"
-
 after_script:
 - cd app
 - git init
@@ -23,23 +18,18 @@ after_script:
 - git add .
 - git commit -m "Build"
 - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:Build-app
-
 branches:
   only:
-    - master
-
+  - master
 before_deploy:
-  - export APK_PATH=$(ls app/build/outputs/apk/*-release-unsigned.apk)
-
+- export APK_PATH=$(ls app/build/outputs/apk/*-release-unsigned.apk)
 deploy:
   provider: releases
   api_key:
-    secure: $GITHUB_TRAVIS
-  file: $APK_PATH
+    secure: SZJe3+E+vgbAMym27xYT5xdJZnpnAATOy6VQnUFcw53/5ORJA1zW9WuoOeGpvTxj2OdhjV3n0SGouCZ9y/paVRqombWWF3L+LRUW/3sjg9efZPj1fGhCu2/wDkODjYxKAJtnO+YYu99nGdk9bQmzreiqrQYdP4MUOn+/08iQNNioIxU70pOSHBfaCtUGstNrhMvz45Ts27JOdwXWEw4rHWebw5Nimdy/kW1wYhIxEgHEOy+3vgRrNhrUybvNQVAp3lAMfUcZjrDN/NXxkdcDgLMl/PLFoY0W2HP2+atpV/AaVJU9HftBf8QXATLJdbmGo94iMfa4v7mCPAh084bVNX1Nid8wmhd5dMAN53pKJRTA6zPL0vbNOa9a5pedxHkorgrFtU6QJaQgK3wxKqWbLfygX0l7OJQfv7NDPh5NAW8drqSdWdhv3mr3R9NZz/ijxB09hbREmphm6/SFRYL46Uc6BnB2fUNX+QaNKsvIOhedcjJoqY+RNCpQiycOLpjjIKknp8LV6ZXs2G4W6K753Awl6ryE6euRZXBZxJfIW3cQXVxTPnNHiF9DoXlWeUdTnn7rj7DbUJiq7+ysA+dV+MhBDGJEIJuPSjLWgfd1AXfhdDY8AklNbxmss177vTEzNf7QdkW8GbvMXFA/6G0VGrI+d8YxJbTNYaZMUBBfnAU=
+  file: "$APK_PATH"
   skip_cleanup: true
   on:
     repo: Ezalor/Unblock163MusicClient-Xposed
-
 after_deploy:
-    - fir p $APK_PATH -T $FIR_TOKEN
-
+- fir p $APK_PATH -T $FIR_TOKEN
