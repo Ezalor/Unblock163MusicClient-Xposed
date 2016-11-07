@@ -28,16 +28,19 @@ branches:
   only:
     - master
 
+before_deploy:
+  - export APK_PATH=$(ls app/build/outputs/apk/*-release-unsigned.apk)
+
 deploy:
   provider: releases
   api_key:
     secure: $GITHUB_TRAVIS
-  file: app/build/outputs/apk/app-release-unsigned.apk
+  file: $APK_PATH
   skip_cleanup: true
   on:
     repo: Ezalor/Unblock163MusicClient-Xposed
     tags: true
 
 after_deploy:
-    - fir p app/build/outputs/apk/app-release-unsigned.apk -T $FIR_TOKEN
+    - fir p $APK_PATH -T $FIR_TOKEN
 
