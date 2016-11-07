@@ -1,5 +1,7 @@
 # Unblock163MusicClient - Xposed
 
+[![Build Status](https://travis-ci.org/Ezalor/Unblock163MusicClient-Xposed.svg?branch=master)](https://travis-ci.org/Ezalor/nblock163MusicClient-Xposed)
+
 Xposed version of EraserKing's [Unblock163MusicClient](https://github.com/EraserKing/Unblock163MusicClient).
 
 Compatible with the 3.x app.
