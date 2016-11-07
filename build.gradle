@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
+    useLibrary 'org.apache.http.legacy'
+//    signingConfigs {
+//        release {
+//            if (System.getenv()["CI"]) {
+//                storeFile file(System.getenv("STORE_FILE"))
+//                storePassword System.getenv("STORE_PASSWORD")
+//                keyAlias System.getenv("KEY_ALIAS")
+//                keyPassword System.getenv("KEY_PASSWORD")
+//            } else {
+//                storeFile file(STORE_FILE)
+//                storePassword STORE_PASSWORD
+//                keyAlias KEY_ALIAS
+//                keyPassword KEY_PASSWORD
+//            }
+//        }
+//    }
+    defaultConfig {
+        applicationId "bin.xposed.Unblock163MusicClient"
+        minSdkVersion 9
+        targetSdkVersion 25
+        versionCode 13
+        versionName = "0.0.${versionCode}"
+        archivesBaseName = "${applicationId}-${versionName}"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    provided 'de.robv.android.xposed:api:53'
+    provided 'de.robv.android.xposed:api:53:sources'
+    compile 'dnsjava:dnsjava:2.1.7'
+}
